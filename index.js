@@ -43,9 +43,13 @@ module.exports = function (content) {
   var coffee;
   var __content;
 
-  ret.__root = json.root;
   for(var language in json){
-    if(language === 'root') continue;
+    if (language === 'root' && json[language] === Object(json[language])) {
+        ret.__root = json.root;
+
+        continue;
+    }
+	
     var targetFile = path.join(targetPath,language,targetFileName);
     if(!fs.existsSync(targetFile)){
         this.emitError(targetFile + 'not exist!');
